@@ -11,5 +11,8 @@ rootProject.name = "gradle-effective-impl"
 
 include(
   "ch01-01",
-  "ch02-01"
+  "ch02-01",
+  "ch02-02",
+  "ch02-03",
+  "ch02-04"
 )
