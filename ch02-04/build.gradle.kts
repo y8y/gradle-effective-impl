@@ -1,5 +1,3 @@
-defaultTasks = listOf("third")
-
 val myGroup = "ch02"
 
 fun printTaskName (task: Task) {
@@ -8,14 +6,14 @@ fun printTaskName (task: Task) {
 
 tasks {
   register("first") {
-    setGroup(myGroup)
-    setDescription("第一个任务")
+    group = myGroup
+    description = "第一个任务"
     // println("Run ${this.name}")
     printTaskName(this)
   }
 
   register("second") {
-    setGroup(myGroup)
+    group = myGroup
     dependsOn("first")
 
     doLast {
@@ -24,11 +22,20 @@ tasks {
   }
 
   register("third") {
-    setGroup(myGroup)
+    group = myGroup
     dependsOn("second")
+    dependsOn(listOf("deployToDev", "deployToAcc"))
 
     doLast {
       println("Run ${this.name}")
     }
   }
+
+  listOf("Dev", "Acc", "Prod").forEach{
+    register("deployTo${it}") {
+      println("Deploying to $it")
+    }
+  }
 }
+
+defaultTasks("third")
