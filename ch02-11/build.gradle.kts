@@ -21,7 +21,12 @@ tasks {
     val output = File("${project.rootDir}/ch02-11/output.txt")
 
     this.inputs.file(source)
-    this.outputs.file(output)
+    // this.outputs.file(output)
+    this.outputs.upToDateWhen {
+      File("${project.rootDir}/ch02-11").listFiles().any {
+        it.name.equals("output.txt")
+      }
+    }
 
     val students = mapper.readValue<Array<Person>>(source.readBytes())
 
@@ -35,4 +40,17 @@ tasks {
       println("Converted ${source.name} to ${output.name}")
     }
   }
+
+  register("last") {
+    dependsOn("convert")
+
+    // ch03-01 测试
+    val outputFiles = files(getConvertTask().inputs.files)
+    println("=== outputFiles 1 = ${(outputFiles + files("test.txt")).joinToString()} ===")
+    println("=== outputFiles 2 = ${(outputFiles + files("test.txt")).asPath} ===")
+  }
+}
+
+fun getConvertTask(): Task {
+  return tasks.getByName("convert")
 }
