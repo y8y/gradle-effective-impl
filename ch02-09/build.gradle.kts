@@ -8,11 +8,11 @@ tasks {
       val today = getInstance()
       val workingHours = today[HOUR_OF_DAY] in 8..17
       if (workingHours) {
-        println("IS workingHours")
+        println("IN workingHours")
         throw StopExecutionException()
-      } else {
-        println("IS NOT workingHours")
       }
+
+      println("after workingHours")
     }
   }
 
