@@ -9,5 +9,10 @@ tasks {
     }
 
     println("smallFiles = ${smallFiles.joinToString()}")
+
+    doLast {
+      println("inputs = ${this.inputs.files.joinToString()}")
+      println("outputs = ${this.outputs.files.joinToString()}")
+    }
   }
 }
