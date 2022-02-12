@@ -32,9 +32,30 @@ tasks {
     into("files")
     archiveFileName.set("dist-files-archive-1.0-sample.zip")
     destinationDirectory.set(layout.buildDirectory.dir("dists"))
+    println("in archiveTest 1")
 
     doFirst {
-      println("in archiveTest")
+      println("in archiveTest 2")
     }
   }
+
+  ext {
+    this.set("customString", "custom")
+    this.set("customInt", 101)
+  }
+
+  register("showProperties") {
+    println("customString = ${ext.get("customString")}")
+    println("customInt = ${ext.get("customInt")}")
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // implementation(files("lib/panshi-tenant-manager-1.0-SNAPSHOT.jar"))
+  implementation(fileTree("lib/tmp") {include("**/*.jar")})
+  // implementation(fileTree("lib/tmp") {include("**/*.class")})
 }
